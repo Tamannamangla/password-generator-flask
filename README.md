@@ -8,7 +8,8 @@ A simple, secure, and customizable Password Generator built with **Python** and 
 
 ## 📸 Preview
 
-![Password Generator Screenshot](screenshot.png) <!-- Optional: add your screenshot -->
+Password Generator Screenshot
+<img width="1104" alt="Screenshot 2025-04-30 at 1 58 01 PM" src="https://github.com/user-attachments/assets/b76b5653-28f8-435a-9c0e-5e8878a8fba2" />
 
 ---
 
@@ -29,9 +30,5 @@ A simple, secure, and customizable Password Generator built with **Python** and 
 
 - Python 3
 - Flask
-- HTML + CSS (no JS)
-
----
-
-## 📁 Project Structure
+- HTML + CSS
 

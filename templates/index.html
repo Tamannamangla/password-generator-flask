@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -57,7 +56,7 @@
         }
 
         input[type="checkbox"] {
-            transform: scale(1.5); 
+            transform: scale(1.5);
             margin-right: 10px;
         }
 
@@ -124,10 +123,10 @@
         <h1>🔐 Password Generator</h1>
         <form action="/" method="post">
             <label>Password Length:</label>
-            <input type="number" name="length" min="4" max="30" value="12" required><br>
+            <input type="number" name="length" min="1" max="30" value="12" required><br>
             <label><input type="checkbox" name="uppercase"> Include Uppercase</label><br>
-            <label><input type="checkbox" name="lowercase" > Include Lowercase</label><br>
-            <label><input type="checkbox" name="digits" > Include Digits</label><br>
+            <label><input type="checkbox" name="lowercase"> Include Lowercase</label><br>
+            <label><input type="checkbox" name="digits"> Include Digits</label><br>
             <label><input type="checkbox" name="symbols"> Include Symbols</label><br>
             <button type="submit">Generate Password</button>
         </form>
@@ -136,9 +135,61 @@
         <div class="password-box">
             <h2>Your Password:</h2>
             <h3>{{ password }}</h3>
+            <input type="text" id="generated-password" value="{{ password }}" style="position:absolute; left:-9999px;">
+            <button onclick="copyPassword()">Copy</button>
+            <div id="strength-indicator" style="margin-top: 1rem; font-weight: bold;"></div>
         </div>
+        
+        <script>
+            // Assign the password value to a JavaScript variable
+            var password = "{{ password }}";
+    
+            // Now call the function to check strength
+            checkStrength(password);
+        </script>
         {% endif %}
+        
     </div>
-</body>
+    <script>
+        window.onload = function () {
+            const password = "{{ password }}";
+            if (password) {
+                checkStrength(password);
+            }
+        }
+        function copyPassword() {
+            const passwordField = document.getElementById("generated-password");
+            passwordField.select();
+            passwordField.setSelectionRange(0, 99999); // For mobile
+            document.execCommand("copy");
+            alert("Password copied to clipboard!");
+        }
 
+        
+        function checkStrength(password) {
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+        
+            const indicator = document.getElementById("strength-indicator");
+            if (strength <= 2) {
+                indicator.textContent = "Strength: Weak 🔴";
+                indicator.style.color = "red";
+            } else if (strength === 3 || strength === 4) {
+                indicator.textContent = "Strength: Medium 🟡";
+                indicator.style.color = "orange";
+            } else {
+                indicator.textContent = "Strength: Strong 🟢";
+                indicator.style.color = "green";
+            }
+        }
+        
+    
+      
+    </script>
+    
+</body>
 </html>
